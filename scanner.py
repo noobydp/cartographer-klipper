@@ -459,7 +459,7 @@ class Scanner:
         test_threshold = gcmd.get_int("THRESHOLD", self.detect_threshold_z, minval=100)
         calibrate = gcmd.get_float("CALIBRATE", self.scanner_touch_config["calibrate"])
         manual_z_offset = gcmd.get_float(
-            "Z_OFFSET", self.scanner_touch_config["z_offset"], minval=0
+            "Z_OFFSET", self.scanner_touch_config["z_offset"], minval=-0.5
         )
         # Debugging information
         self.log_debug_info(
@@ -2354,7 +2354,7 @@ class Scanner:
         if self.calibration_method == "touch":
             newoffset = self.scanner_touch_config["z_offset"]
             newoffset += offset
-            if newoffset < 0:
+            if newoffset < -0.5:
                 self.scanner_touch_config["z_offset"] = 0
                 configfile = self.printer.lookup_object("configfile")
                 configfile.set("scanner", "scanner_touch_z_offset", "%.3f" % 0)
